@@ -2,6 +2,7 @@ import numpy as np
 import itertools
 import pygame
 import sys
+import math
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors
 
 def createBoard():
@@ -77,35 +78,37 @@ while not gameOver:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
 
+            posx = event.pos[0]
+
             # Ask for player 1 input
-            # if turn == 0:
-            #     col = int(input("Player 1 make your selection (0-6): "))
+            if turn == 0:
+                col = int(math.floor(posx/SQUARESIZE))
 
-            #     if isValidLocation(board, col):
-            #         row = getNextOpenRow(board, col)
-            #         dropPiece(board, row, col, 1)
+                if isValidLocation(board, col):
+                    row = getNextOpenRow(board, col)
+                    dropPiece(board, row, col, 1)
 
-            #         if gameOverCheck(board, 1):
-            #             print("Player 1 Wins!!")
-            #             gameOver = True
+                    if gameOverCheck(board, 1):
+                        print("Player 1 Wins!!")
+                        gameOver = True
 
             # # Ask for player 2 input
-            # else:
-            #     col= int(input("Player 2 make your selection (0-6): "))
+            else:
+                col = int(math.floor(posx/SQUARESIZE))
 
-            #     if isValidLocation(board, col):
-            #         row = getNextOpenRow(board, col)
-            #         dropPiece(board, row, col, 2)
+                if isValidLocation(board, col):
+                    row = getNextOpenRow(board, col)
+                    dropPiece(board, row, col, 2)
 
-            #         if gameOverCheck(board, 2):
-            #             print("Player 2 Wins!!")
-            #             gameOver = True
+                    if gameOverCheck(board, 2):
+                        print("Player 2 Wins!!")
+                        gameOver = True
 
             printBoard(board)
 
-            # #  Switching turns between players
-            # turn += 1
-            # turn %= 2
+            #  Switching turns between players
+            turn += 1
+            turn %= 2
 
 
 
