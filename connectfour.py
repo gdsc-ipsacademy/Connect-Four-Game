@@ -26,50 +26,62 @@ def getNextOpenRow(board, col):
 def dropPiece(board, row, col, piece):
     board[row][col] = piece
 
-#  Flipping the board before printing it because numpy starts 0,0 index from top left instaed of bottom left
+# Flipping the board before printing it because numpy starts 0,0 index from top left instaed of bottom left
 def printBoard(board):
     print(np.flip(board, 0))
 
 # Checking if the game is over
 def gameOverCheck(board, piece):
     
-    #  Checking horizontal win
+    # Checking horizontal win
     for c, r in itertools.product(range(COLUMN_COUNT - 3), range(ROW_COUNT)):
         if board[r][c] == piece and board[r][c+1] == piece and board[r][c+2] == piece and board[r][c+3] == piece:
             return True
 
-    #  Checking vertical win
+    # Checking vertical win
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT - 3)):
         if board[r][c] == piece and board[r+1][c] == piece and board[r+2][c] == piece and board[r+3][c] == piece:
             return True
 
-    #  Checking positive slop diagonal win
+    # Checking positive slop diagonal win
     for c, r in itertools.product(range(COLUMN_COUNT - 3), range(ROW_COUNT - 3)):
         if board[r][c] == piece and board[r+1][c+1] == piece and board[r+2][c+2] == piece and board[r+3][c+3] == piece:
             return True
         
-    #  Checking negative slop diagonal win
+    # Checking negative slop diagonal win
     for c, r in itertools.product(range(COLUMN_COUNT - 3), range(3, ROW_COUNT)):
         if board[r][c] == piece and board[r-1][c+1] == piece and board[r-2][c+2] == piece and board[r-3][c+3] == piece:
             return True
 
+# Drawing board graphics
 def drawBoard(board):
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
+
         pygame.draw.rect(screen, colors["BLUE"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-        pygame.draw.circle(screen, colors["BLACK"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+
+        if board[r][c] == 0:
+            pygame.draw.circle(screen, colors["BLACK"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+        
+        elif board[r][c] == 1:
+            pygame.draw.circle(screen, colors["RED"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+        
+        else:
+            pygame.draw.circle(screen, colors["YELLOW"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+
+    pygame.display.update()
 
 printBoard(board)
 
-#  Initialising the game
+# Initialising the game
 pygame.init()
 
-#  Setting screen size
+# Setting screen size
 screen = pygame.display.set_mode(size)
 
 drawBoard(board)
 pygame.display.update()
 
-#  Game loop
+# Game loop
 while not gameOver:
 
     for event in pygame.event.get():
@@ -92,7 +104,7 @@ while not gameOver:
                         print("Player 1 Wins!!")
                         gameOver = True
 
-            # # Ask for player 2 input
+            # Ask for player 2 input
             else:
                 col = int(math.floor(posx/SQUARESIZE))
 
@@ -105,8 +117,9 @@ while not gameOver:
                         gameOver = True
 
             printBoard(board)
+            drawBoard(board)
 
-            #  Switching turns between players
+            # Switching turns between players
             turn += 1
             turn %= 2
 

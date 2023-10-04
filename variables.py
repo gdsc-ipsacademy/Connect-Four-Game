@@ -16,4 +16,6 @@ RADIUS = int(SQUARESIZE/2 - 5)
 colors = {
 "BLUE" : (0, 0, 204),
 "BLACK" : (0, 0, 0),
+"RED" : (204, 0, 0),
+"YELLOW": (204, 204, 0),
 }
