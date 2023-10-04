@@ -76,6 +76,7 @@ pygame.init()
 # Setting screen size
 screen = pygame.display.set_mode(size)
 
+# Drawing board
 drawBoard(board)
 pygame.display.update()
 
@@ -140,6 +141,7 @@ while not gameOver:
             turn += 1
             turn %= 2
 
+            # Wait after game is over 
             if gameOver:
                 pygame.time.wait(3000)
 
