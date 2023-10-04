@@ -79,6 +79,8 @@ screen = pygame.display.set_mode(size)
 drawBoard(board)
 pygame.display.update()
 
+myfont = pygame.font.SysFont("monospace", 80)
+
 # Game loop
 while not gameOver:
 
@@ -102,7 +104,7 @@ while not gameOver:
 
         # Checking mouse click event
         if event.type == pygame.MOUSEBUTTONDOWN:
-
+            pygame.draw.rect(screen, colors["BLACK"], (0, 0, width, SQUARESIZE))
             posx = event.pos[0]
 
             # Ask for player 1 input
@@ -114,7 +116,8 @@ while not gameOver:
                     dropPiece(board, row, col, 1)
 
                     if gameOverCheck(board, 1):
-                        print("Player 1 Wins!!")
+                        label = myfont.render("Player 1 wins!!", 1, colors["RED"])
+                        screen.blit(label, (40, 10))
                         gameOver = True
 
             # Ask for player 2 input
@@ -126,7 +129,8 @@ while not gameOver:
                     dropPiece(board, row, col, 2)
 
                     if gameOverCheck(board, 2):
-                        print("Player 2 Wins!!")
+                        label = myfont.render("Player 1 wins!!", 1, colors["YELLOW"])
+                        screen.blit(label, (40, 10))
                         gameOver = True
 
             printBoard(board)
@@ -135,6 +139,9 @@ while not gameOver:
             # Switching turns between players
             turn += 1
             turn %= 2
+
+            if gameOver:
+                pygame.time.wait(3000)
 
 
 
