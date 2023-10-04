@@ -17,6 +17,10 @@ while not gameOver:
     else:
         selection = int(input("Player 2 make your selection (0-6): "))
 
+    turn += 1
+    turn %= 2
+
+
 
 
 
