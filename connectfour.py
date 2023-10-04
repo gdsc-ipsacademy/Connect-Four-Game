@@ -2,7 +2,10 @@ import numpy as np
 import itertools
 import pygame
 import sys
-from variables import ROW_COUNT, COLUMN_COUNT, size
+from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS
+
+BLUE = (0, 0, 204)
+BLACK = (0, 0, 0)
 
 def createBoard():
     return np.zeros((ROW_COUNT,COLUMN_COUNT))
@@ -53,7 +56,9 @@ def gameOverCheck(board, piece):
             return True
 
 def drawBoard(board):
-    pass
+    for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
+        pygame.draw.rect(screen, BLUE, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
+        pygame.draw.circle(screen, BLACK, (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
 
 printBoard(board)
 
@@ -62,6 +67,9 @@ pygame.init()
 
 #  Setting screen size
 screen = pygame.display.set_mode(size)
+
+drawBoard(board)
+pygame.display.update()
 
 #  Game loop
 while not gameOver:
