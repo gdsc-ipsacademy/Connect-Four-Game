@@ -2,10 +2,7 @@ import numpy as np
 import itertools
 import pygame
 import sys
-
-# Connect four board has dimentions 6*7
-ROW_COUNT = 6
-COLUMN_COUNT = 7
+from variables import ROW_COUNT, COLUMN_COUNT, size
 
 def createBoard():
     return np.zeros((ROW_COUNT,COLUMN_COUNT))
@@ -63,13 +60,7 @@ printBoard(board)
 #  Initialising the game
 pygame.init()
 
-SQUARESIZE = 100
-
-width = COLUMN_COUNT * SQUARESIZE
-height = (ROW_COUNT + 1) * SQUARESIZE
-
-size = (width, height)
-
+#  Setting screen size
 screen = pygame.display.set_mode(size)
 
 #  Game loop
