@@ -3,7 +3,7 @@ import itertools
 import pygame
 import sys
 import math
-from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors
+from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width
 
 def createBoard():
     return np.zeros((ROW_COUNT,COLUMN_COUNT))
@@ -56,17 +56,14 @@ def gameOverCheck(board, piece):
 # Drawing board graphics
 def drawBoard(board):
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
-
         pygame.draw.rect(screen, colors["BLUE"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-
-        if board[r][c] == 0:
-            pygame.draw.circle(screen, colors["BLACK"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+        pygame.draw.circle(screen, colors["BLACK"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
         
-        elif board[r][c] == 1:
-            pygame.draw.circle(screen, colors["RED"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
-        
-        else:
-            pygame.draw.circle(screen, colors["YELLOW"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+    for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
+        if board[r][c] == 1:
+            pygame.draw.circle(screen, colors["RED"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+        elif board[r][c] == 2: 
+            pygame.draw.circle(screen, colors["YELLOW"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
 
     pygame.display.update()
 
