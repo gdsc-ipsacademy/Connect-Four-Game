@@ -11,3 +11,9 @@ height = (ROW_COUNT + 1) * SQUARESIZE
 size = (width, height)
 
 RADIUS = int(SQUARESIZE/2 - 5)
+
+# Dictionary for colors
+colors = {
+"BLUE" : (0, 0, 204),
+"BLACK" : (0, 0, 0),
+}
