@@ -55,6 +55,7 @@ def gameOverCheck(board, piece):
 
 # Drawing board graphics
 def drawBoard(board):
+
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
         pygame.draw.rect(screen, colors["BLUE"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
         pygame.draw.circle(screen, colors["BLACK"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
@@ -81,10 +82,25 @@ pygame.display.update()
 # Game loop
 while not gameOver:
 
+    # Getting the events
     for event in pygame.event.get():
+
+        # Checking if the game has been quit
         if event.type == pygame.QUIT:
             sys.exit()
 
+        # Checking mouse hover event
+        if event.type == pygame.MOUSEMOTION:
+            pygame.draw.rect(screen, colors["BLACK"], (0, 0, width, SQUARESIZE))
+            posx = event.pos[0]
+            if turn == 0:
+                pygame.draw.circle(screen, colors["RED"], (posx, int(SQUARESIZE/2)), RADIUS)
+            else:
+                pygame.draw.circle(screen, colors["YELLOW"], (posx, int(SQUARESIZE/2)), RADIUS)
+        
+        pygame.display.update()
+
+        # Checking mouse click event
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             posx = event.pos[0]
