@@ -70,14 +70,25 @@ def drawBoard(board):
 
 # Getting scores for connect 4s and connect 3s
 def scorePosition(board, piece):
+
     # Horizontal score
     score = 0
     for r in range(ROW_COUNT):
         rowArray = [int(i) for i in list(board[r , : ])]
-
         for c in range(COLUMN_COUNT - 3):
-
             window = rowArray[c : c + WINDOW_LENGTH]
+
+            if window.count(piece) == 4:
+                score += 100
+
+            elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+                score += 10
+    
+    # Vertical score
+    for c in range(COLUMN_COUNT):
+        colArray = [int(i) for i in list(board[ : , c])]
+        for r in range(ROW_COUNT):
+            window = colArray[r : r + WINDOW_LENGTH]
 
             if window.count(piece) == 4:
                 score += 100
