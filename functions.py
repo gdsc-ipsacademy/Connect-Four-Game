@@ -1,8 +1,9 @@
 import numpy as np
 import itertools
 import pygame
+import random
 
-from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE
+from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE, WINDOW_LENGTH, EMPTY
 
 
 # Creating board
@@ -67,7 +68,45 @@ def drawBoard(board):
 
     pygame.display.update()
 
+# Getting scores for connect 4s and connect 3s
 def scorePosition(board, piece):
-
     # Horizontal score
-    pass
+    score = 0
+    for r in range(ROW_COUNT):
+        rowArray = [int(i) for i in list(board[r , : ])]
+
+        for c in range(COLUMN_COUNT - 3):
+
+            window = rowArray[c : c + WINDOW_LENGTH]
+
+            if window.count(piece) == 4:
+                score += 100
+
+            elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+                score += 10
+            
+    return score
+
+# Picking best moves based on scores
+def pickBestMove(board, piece):
+
+    validLocations = getValidLocations(board)
+
+    bestScore = 0
+    bestCol = random.choice(validLocations)
+
+    for c in validLocations:
+        r = getNextOpenRow(board, c)
+        tempBoard = board.copy()
+        dropPiece(tempBoard, r, c, piece)
+        score = scorePosition(tempBoard, piece)
+
+        if score > bestScore:
+            bestScore = score
+            bestCol = c
+
+    return bestCol
+
+# Getting valid locations for AI
+def getValidLocations(board):
+    return [c for c in range(COLUMN_COUNT) if isValidLocation(board, c)]

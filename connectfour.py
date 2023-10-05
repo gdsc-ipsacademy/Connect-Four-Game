@@ -3,7 +3,7 @@ import sys
 import math
 import random
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, PLAYER_PIECE, AI_PIECE
-from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, board, screen
+from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, pickBestMove, board, screen
 
 gameOver = False
 turn = random.randint(PLAYER, AI)
@@ -64,7 +64,8 @@ while not gameOver:
     if turn == AI and not gameOver:
 
         # Random move selection
-        col = random.randint(0, COLUMN_COUNT - 1)
+        # col = random.randint(0, COLUMN_COUNT - 1)
+        col = pickBestMove(board, AI_PIECE)
 
         if isValidLocation(board, col):
 

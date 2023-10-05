@@ -26,3 +26,6 @@ AI = 1
 # Values for player and AI piece
 PLAYER_PIECE = 1
 AI_PIECE = 2
+
+WINDOW_LENGTH = 4
+EMPTY = 0
