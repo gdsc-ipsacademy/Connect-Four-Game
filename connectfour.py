@@ -4,17 +4,15 @@ import pygame
 import sys
 import math
 import random
-from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width
+from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI
 
+# Creating board
 def createBoard():
     return np.zeros((ROW_COUNT,COLUMN_COUNT))
 
 board = createBoard()
 gameOver = False
-
-PLAYER = 0
-AI = 1
-turn = 0
+turn = random.randint(PLAYER, AI)
 
 # Checking if the top row of a selected column is empty or not
 def isValidLocation(board, col):
@@ -100,10 +98,8 @@ while not gameOver:
         if event.type == pygame.MOUSEMOTION:
             pygame.draw.rect(screen, colors["BLACK"], (0, 0, width, SQUARESIZE))
             posx = event.pos[0]
-            if turn == 0:
+            if turn == PLAYER:
                 pygame.draw.circle(screen, colors["RED"], (posx, int(SQUARESIZE/2)), RADIUS)
-            else:
-                pygame.draw.circle(screen, colors["YELLOW"], (posx, int(SQUARESIZE/2)), RADIUS)
         
         pygame.display.update()
 
@@ -128,13 +124,21 @@ while not gameOver:
                     turn += 1
                     turn %= 2
 
+                    printBoard(board)
+                    drawBoard(board)
+
 
     # Ask for player 2 input
     if turn == AI and not gameOver:
 
+        # Random move selection
         col = random.randint(0, COLUMN_COUNT - 1)
 
         if isValidLocation(board, col):
+
+            # Adding delay to AI move
+            pygame.time.wait(500)
+
             row = getNextOpenRow(board, col)
             dropPiece(board, row, col, 2)
 

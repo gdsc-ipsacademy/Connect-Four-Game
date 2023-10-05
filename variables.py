@@ -18,3 +18,7 @@ colors = {
 "RED" : (204, 0, 0),
 "YELLOW": (204, 204, 0),
 }
+
+# Values for player and AI turns
+PLAYER = 0
+AI = 1
