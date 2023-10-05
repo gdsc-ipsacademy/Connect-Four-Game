@@ -13,10 +13,11 @@ RADIUS = int(SQUARESIZE/2 - 5)
 
 # Dictionary for colors
 colors = {
-"BLUE" : (0, 0, 204),
-"BLACK" : (0, 0, 0),
-"RED" : (204, 0, 0),
-"YELLOW": (204, 204, 0),
+"VERDIGRIS" : (23,190,187),
+"CHARCOAL" : (47,72,88),
+"CERISE" : (236,64,103) ,
+"ICTERINE": (248,242,114),
+"MISTYROSE": (250,216,214),
 }
 
 # Values for player and AI turns

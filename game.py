@@ -29,16 +29,16 @@ while not gameOver:
 
         # Checking mouse hover event
         if event.type == pygame.MOUSEMOTION:
-            pygame.draw.rect(screen, colors["BLACK"], (0, 0, width, SQUARESIZE))
+            pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
             posx = event.pos[0]
             if turn == PLAYER:
-                pygame.draw.circle(screen, colors["RED"], (posx, int(SQUARESIZE/2)), RADIUS)
+                pygame.draw.circle(screen, colors["CERISE"], (posx, int(SQUARESIZE/2)), RADIUS)
         
         pygame.display.update()
 
         # Checking mouse click event
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, colors["BLACK"], (0, 0, width, SQUARESIZE))
+            pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
             posx = event.pos[0]
 
             # Ask for player 1 input
@@ -50,7 +50,7 @@ while not gameOver:
                     dropPiece(board, row, col, PLAYER_PIECE)
 
                     if gameOverCheck(board, PLAYER_PIECE):
-                        label = myfont.render("Player 1 wins!!", 1, colors["RED"])
+                        label = myfont.render("Player 1 wins!!", 1, colors["MISTYROSE"])
                         screen.blit(label, (40, 10))
                         gameOver = True
 
@@ -76,7 +76,7 @@ while not gameOver:
             dropPiece(board, row, col, AI_PIECE)
 
             if gameOverCheck(board, AI_PIECE):
-                label = myfont.render("Player 1 wins!!", 1, colors["YELLOW"])
+                label = myfont.render("Player 1 wins!!", 1, colors["MISTYROSE"])
                 screen.blit(label, (40, 10))
                 gameOver = True
 
