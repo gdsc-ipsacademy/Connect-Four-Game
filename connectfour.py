@@ -2,7 +2,7 @@ import pygame
 import sys
 import math
 import random
-from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI
+from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, PLAYER_PIECE, AI_PIECE
 from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, board, screen
 
 gameOver = False
@@ -47,9 +47,9 @@ while not gameOver:
 
                 if isValidLocation(board, col):
                     row = getNextOpenRow(board, col)
-                    dropPiece(board, row, col, 1)
+                    dropPiece(board, row, col, PLAYER_PIECE)
 
-                    if gameOverCheck(board, 1):
+                    if gameOverCheck(board, PLAYER_PIECE):
                         label = myfont.render("Player 1 wins!!", 1, colors["RED"])
                         screen.blit(label, (40, 10))
                         gameOver = True
@@ -72,9 +72,9 @@ while not gameOver:
             pygame.time.wait(500)
 
             row = getNextOpenRow(board, col)
-            dropPiece(board, row, col, 2)
+            dropPiece(board, row, col, AI_PIECE)
 
-            if gameOverCheck(board, 2):
+            if gameOverCheck(board, AI_PIECE):
                 label = myfont.render("Player 1 wins!!", 1, colors["YELLOW"])
                 screen.blit(label, (40, 10))
                 gameOver = True

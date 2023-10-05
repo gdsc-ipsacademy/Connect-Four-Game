@@ -2,7 +2,8 @@ import numpy as np
 import itertools
 import pygame
 
-from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width
+from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE
+
 
 # Creating board
 def createBoard():
@@ -59,9 +60,14 @@ def drawBoard(board):
         pygame.draw.circle(screen, colors["BLACK"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
         
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
-        if board[r][c] == 1:
+        if board[r][c] == PLAYER_PIECE:
             pygame.draw.circle(screen, colors["RED"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
-        elif board[r][c] == 2: 
+        elif board[r][c] == AI_PIECE: 
             pygame.draw.circle(screen, colors["YELLOW"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
 
     pygame.display.update()
+
+def scorePosition(board, piece):
+
+    # Horizontal score
+    pass

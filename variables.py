@@ -22,3 +22,7 @@ colors = {
 # Values for player and AI turns
 PLAYER = 0
 AI = 1
+
+# Values for player and AI piece
+PLAYER_PIECE = 1
+AI_PIECE = 2
