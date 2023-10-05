@@ -82,8 +82,11 @@ def scorePosition(board, piece):
                 score += 100
 
             elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+                score += 50
+
+            elif window.count(piece) == 2 and window.count(EMPTY) == 2:
                 score += 10
-    
+
     # Vertical score
     for c in range(COLUMN_COUNT):
         colArray = [int(i) for i in list(board[ : , c])]
@@ -94,8 +97,38 @@ def scorePosition(board, piece):
                 score += 100
 
             elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+                score += 50
+
+            elif window.count(piece) == 2 and window.count(EMPTY) == 2:
                 score += 10
-            
+
+    # Positive slope diagonal score
+    for r, c in itertools.product(range(ROW_COUNT - 3), range(COLUMN_COUNT - 3)):
+        window = [board[r + i][c + i] for i in range(WINDOW_LENGTH)]
+
+        if window.count(piece) == 4:
+                score += 100
+
+        elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+                score += 50
+
+        elif window.count(piece) == 2 and window.count(EMPTY) == 2:
+                score += 10
+
+    # Negative slope diagonal score
+    for r, c in itertools.product(range(ROW_COUNT - 3), range(COLUMN_COUNT - 3)):
+        window = [board[r + 3 - i][c + i] for i in range(WINDOW_LENGTH)]
+
+        if window.count(piece) == 4:
+                score += 100
+
+        elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+                score += 50
+
+        elif window.count(piece) == 2 and window.count(EMPTY) == 2:
+                score += 10
+
+
     return score
 
 # Picking best moves based on scores
