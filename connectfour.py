@@ -3,6 +3,7 @@ import itertools
 import pygame
 import sys
 import math
+import random
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width
 
 def createBoard():
@@ -10,6 +11,9 @@ def createBoard():
 
 board = createBoard()
 gameOver = False
+
+PLAYER = 0
+AI = 1
 turn = 0
 
 # Checking if the top row of a selected column is empty or not
@@ -109,7 +113,7 @@ while not gameOver:
             posx = event.pos[0]
 
             # Ask for player 1 input
-            if turn == 0:
+            if turn == PLAYER:
                 col = int(math.floor(posx/SQUARESIZE))
 
                 if isValidLocation(board, col):
@@ -121,18 +125,23 @@ while not gameOver:
                         screen.blit(label, (40, 10))
                         gameOver = True
 
-            # Ask for player 2 input
-            else:
-                col = int(math.floor(posx/SQUARESIZE))
+                    turn += 1
+                    turn %= 2
 
-                if isValidLocation(board, col):
-                    row = getNextOpenRow(board, col)
-                    dropPiece(board, row, col, 2)
 
-                    if gameOverCheck(board, 2):
-                        label = myfont.render("Player 1 wins!!", 1, colors["YELLOW"])
-                        screen.blit(label, (40, 10))
-                        gameOver = True
+    # Ask for player 2 input
+    if turn == AI and not gameOver:
+
+        col = random.randint(0, COLUMN_COUNT - 1)
+
+        if isValidLocation(board, col):
+            row = getNextOpenRow(board, col)
+            dropPiece(board, row, col, 2)
+
+            if gameOverCheck(board, 2):
+                label = myfont.render("Player 1 wins!!", 1, colors["YELLOW"])
+                screen.blit(label, (40, 10))
+                gameOver = True
 
             printBoard(board)
             drawBoard(board)
@@ -141,9 +150,9 @@ while not gameOver:
             turn += 1
             turn %= 2
 
-            # Wait after game is over 
-            if gameOver:
-                pygame.time.wait(3000)
+    # Wait after game is over 
+    if gameOver:
+        pygame.time.wait(3000)
 
 
 
