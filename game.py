@@ -2,10 +2,13 @@ import pygame
 import sys
 import math
 import random
+
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
     PLAYER_PIECE, AI_PIECE
-from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, pickBestMove, minimax, \
+from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, \
     board, screen
+from scoreAI import pickBestMove
+from minmaxAI import minimax
 
 gameOver = False
 turn = random.randint(PLAYER, AI)
@@ -68,7 +71,7 @@ while not gameOver:
         # Score based selection
         # col = pickBestMove(board, AI_PIECE)
         # Minmax based selection
-        col, minimaxScore = minimax(board, 7, -math.inf , math.inf, True)
+        col, minimaxScore = minimax(board, 6, -math.inf , math.inf, True)
 
 
         if isValidLocation(board, col):
