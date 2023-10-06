@@ -8,11 +8,28 @@ A game of connect four against AI.
 
 
 # Directory structure
-- [variables.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/variables.py) contains all the GLOBAL variables for the project so that they are easy to find and change if ever needed. Helps in writing clean code.
-- [functions.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/functions.py) contains all the functions used in the game loop. This helps in bundling the functions together so that they are easy to find, edit and are easily accessible throughout the project. Keeps the main file clean as well.
-- [game.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/game.py) is the main file which contains the game loop and executes the software.
+- [variables.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/variables.py) contains all the GLOBAL variables for the project so that they are easy to find and change if ever needed. Helps in writing clean code.
+- [functions.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/functions.py) contains all the functions used in the game loop. This helps in bundling the functions together so that they are easy to find, edit and are easily accessible throughout the project. Keeps the main file clean as well.
+- [scoreAI.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/scoreAI.py) contains the functions for the score based AI version.
+- [minmaxAI.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/minmaxAI.py) contains the functions for the minmax algorithm based AI version.
+- [game.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/game.py) is the main file which contains the game loop and executes the software.
 
 # Version information
 - [v0.1.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v0.1.0) contains the base game without AI. It just has human vs human mode where turns switch between both until the game is over.
 - [v1.0.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.1) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
 - [v1.2.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.2.0) contains the game with an AI that uses minmax algorithm with alpha-beta pruning, calculating upto depth 7, which makes it impossible to beat. This version contains just human vs AI mode where turns switch between both until the game is over.
+
+# How to run the game?
+1. Clone the repository to your machine following [how to clone a repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) documentation.
+2. Create a virtual environment by using the command `python<version> -m venv <virtual-environment-name>` in your terminal.
+
+(If you don't have venv installed, you can install it by running `pip install virtualenv` in your terminal.)
+
+3. Activate the virtual environment by running either `<virtual-environment-name>/Scripts/activate.bat` in CMD or `<virtual-environment-name>/Scripts/Activate.ps1` in PowerShell.
+
+(To deactivate the virtual environment run the command `deactivate`.
+
+4. Install the requirements in the virtual environment by running `pip install -r requirements.txt`.
+5. Run the game by running `python -u <directory path>\Connect-Four-Game\src\game.py`
+
+If you don't want to go through the hassle of creating a viertual environment, just run the commands in steps 4 and 5.
