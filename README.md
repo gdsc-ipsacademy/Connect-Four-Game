@@ -1,7 +1,11 @@
 # Connect four
 A game of connect four against AI.
 
-![image](https://github.com/gdsc-ipsacademy/Connect-Four-Game/assets/81830617/0734ced7-49cf-4542-a993-d014819ed2e1)
+![image](https://github.com/gdsc-ipsacademy/Connect-Four-Game/assets/81830617/9ffb20cd-9c8e-40fd-9fb6-8942ffdb02a1)
+
+
+![image](https://github.com/gdsc-ipsacademy/Connect-Four-Game/assets/81830617/469ed5b2-7d2f-4d5f-93b9-31bc19134d24)
+
 
 # Directory structure
 - [variables.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/variables.py) contains all the GLOBAL variables for the project so that they are easy to find and change if ever needed. Helps in writing clean code.
@@ -10,4 +14,4 @@ A game of connect four against AI.
 
 # Version information
 - [v0.1.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v0.1.0) contains the base game without AI. It just has human vs human mode where turns switch between both until the game is over.
-- [v1.0.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.0) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
+- [v1.0.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.1) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
