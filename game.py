@@ -2,8 +2,10 @@ import pygame
 import sys
 import math
 import random
-from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, PLAYER_PIECE, AI_PIECE
-from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, pickBestMove, board, screen
+from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
+    PLAYER_PIECE, AI_PIECE
+from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, pickBestMove, \
+    board, screen
 
 gameOver = False
 turn = random.randint(PLAYER, AI)
@@ -32,8 +34,8 @@ while not gameOver:
             pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
             posx = event.pos[0]
             if turn == PLAYER:
-                pygame.draw.circle(screen, colors["CERISE"], (posx, int(SQUARESIZE/2)), RADIUS)
-        
+                pygame.draw.circle(screen, colors["CERISE"], (posx, int(SQUARESIZE / 2)), RADIUS)
+
         pygame.display.update()
 
         # Checking mouse click event
@@ -43,22 +45,20 @@ while not gameOver:
 
             # Ask for player 1 input
             if turn == PLAYER:
-                col = int(math.floor(posx/SQUARESIZE))
+                col = int(math.floor(posx / SQUARESIZE))
 
                 if isValidLocation(board, col):
                     row = getNextOpenRow(board, col)
                     dropPiece(board, row, col, PLAYER_PIECE)
 
                     if gameOverCheck(board, PLAYER_PIECE):
-                        label = myfont.render("Player 1 wins!!", 1, colors["MISTYROSE"])
+                        label = myfont.render("You win!!", 1, colors["MISTYROSE"])
                         screen.blit(label, (40, 10))
                         gameOver = True
 
-                    turn += 1
-                    turn %= 2
+                    turn ^= 1
 
                     drawBoard(board)
-
 
     # Ask for player 2 input
     if turn == AI and not gameOver:
@@ -76,27 +76,15 @@ while not gameOver:
             dropPiece(board, row, col, AI_PIECE)
 
             if gameOverCheck(board, AI_PIECE):
-                label = myfont.render("Player 1 wins!!", 1, colors["MISTYROSE"])
+                label = myfont.render("AI wins!!", 1, colors["MISTYROSE"])
                 screen.blit(label, (40, 10))
                 gameOver = True
 
             drawBoard(board)
 
             # Switching turns between players
-            turn += 1
-            turn %= 2
+            turn ^= 1
 
     # Wait after game is over 
     if gameOver:
         pygame.time.wait(3000)
-
-
-
-
-
-
-
-
-
-
-

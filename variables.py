@@ -9,15 +9,15 @@ width = COLUMN_COUNT * SQUARESIZE
 height = (ROW_COUNT + 1) * SQUARESIZE
 size = (width, height)
 
-RADIUS = int(SQUARESIZE/2 - 5)
+RADIUS = int(SQUARESIZE / 2 - 5)
 
 # Dictionary for colors
 colors = {
-"VERDIGRIS" : (23,190,187),
-"CHARCOAL" : (47,72,88),
-"CERISE" : (236,64,103) ,
-"ICTERINE": (248,242,114),
-"MISTYROSE": (250,216,214),
+    "VERDIGRIS": (23, 190, 187),
+    "CHARCOAL": (47, 72, 88),
+    "CERISE": (236, 64, 103),
+    "ICTERINE": (248, 242, 114),
+    "MISTYROSE": (250, 216, 214),
 }
 
 # Values for player and AI turns
