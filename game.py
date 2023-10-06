@@ -68,7 +68,7 @@ while not gameOver:
         # Score based selection
         # col = pickBestMove(board, AI_PIECE)
         # Minmax based selection
-        col, minimaxScore = minimax(board, 5, True)
+        col, minimaxScore = minimax(board, 7, -math.inf , math.inf, True)
 
 
         if isValidLocation(board, col):

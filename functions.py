@@ -156,7 +156,7 @@ def isTerminalNode(board):
     return gameOverCheck(board, PLAYER_PIECE) or gameOverCheck(board, AI_PIECE) or len(getValidLocations(board)) == 0
 
 # Implimenting minimax algorithm
-def minimax(board, depth, maximizingPlayer):
+def minimax(board, depth, alpha, beta, maximizingPlayer):
     validLocations = getValidLocations(board)
 
     if isTerminal := isTerminalNode(board):
@@ -177,26 +177,36 @@ def minimax(board, depth, maximizingPlayer):
             r = getNextOpenRow(board, c)
             tempBoard = board.copy()
             dropPiece(tempBoard, r, c, AI_PIECE)
-            newScore = minimax(tempBoard, depth - 1, False)[1]
+            newScore = minimax(tempBoard, depth - 1, alpha, beta, False)[1]
 
             if newScore > value:
                 value = newScore
                 column = c
+            
+            alpha = max(alpha, value)
+
+            if alpha >= beta:
+                break
 
     # Minimizing player
     else:
         value = math.inf
         column = random.choice(validLocations)
-        
+
         for c in validLocations:
             r = getNextOpenRow(board, c)
             tempBoard = board.copy()
             dropPiece(tempBoard, r, c, PLAYER_PIECE)
-            newScore = minimax(tempBoard, depth - 1, True)[1]
+            newScore = minimax(tempBoard, depth - 1, alpha, beta, True)[1]
 
             if newScore < value:
                 value = newScore
                 column = c
+
+            beta = min(beta, value)
+
+            if alpha >= beta:
+                break
 
 
     return column, value
