@@ -52,7 +52,7 @@ while not gameOver:
                     dropPiece(board, row, col, PLAYER_PIECE)
 
                     if gameOverCheck(board, PLAYER_PIECE):
-                        label = myfont.render("You win!!", 1, colors["MISTYROSE"])
+                        label = myfont.render("You win!! ^_^", 1, colors["MISTYROSE"])
                         screen.blit(label, (40, 10))
                         gameOver = True
 
@@ -76,7 +76,7 @@ while not gameOver:
             dropPiece(board, row, col, AI_PIECE)
 
             if gameOverCheck(board, AI_PIECE):
-                label = myfont.render("AI wins!!", 1, colors["MISTYROSE"])
+                label = myfont.render("AI wins!! :[", 1, colors["MISTYROSE"])
                 screen.blit(label, (40, 10))
                 gameOver = True
 
