@@ -16,6 +16,9 @@ turn = random.randint(PLAYER, AI)
 # Initialising the game
 pygame.init()
 
+# Display game window title
+pygame.display.set_caption("Connect Four")
+
 # Drawing board
 drawBoard(board)
 pygame.display.update()
