@@ -14,4 +14,4 @@ A game of connect four against AI.
 
 # Version information
 - [v0.1.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v0.1.0) contains the base game without AI. It just has human vs human mode where turns switch between both until the game is over.
-- [v1.0.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.0) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
+- [v1.0.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.1) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
