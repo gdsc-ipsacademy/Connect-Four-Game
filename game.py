@@ -4,7 +4,7 @@ import math
 import random
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
     PLAYER_PIECE, AI_PIECE
-from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, pickBestMove, \
+from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, gameOverCheck, drawBoard, pickBestMove, minimax, \
     board, screen
 
 gameOver = False
@@ -65,12 +65,16 @@ while not gameOver:
 
         # Random move selection
         # col = random.randint(0, COLUMN_COUNT - 1)
-        col = pickBestMove(board, AI_PIECE)
+        # Score based selection
+        # col = pickBestMove(board, AI_PIECE)
+        # Minmax based selection
+        col, minimaxScore = minimax(board, 5, True)
+
 
         if isValidLocation(board, col):
 
             # Adding delay to AI move
-            pygame.time.wait(500)
+            # pygame.time.wait(500)
 
             row = getNextOpenRow(board, col)
             dropPiece(board, row, col, AI_PIECE)

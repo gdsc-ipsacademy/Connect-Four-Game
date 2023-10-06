@@ -2,6 +2,7 @@ import numpy as np
 import itertools
 import pygame
 import random
+import math
 
 from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE, WINDOW_LENGTH, EMPTY
 
@@ -152,7 +153,7 @@ def getValidLocations(board):
 
 # Checking for terminal nodes
 def isTerminalNode(board):
-    return gameOverCheck(board, PLAYER_PIECE) or gameOverCheck(board, AI_PIECE) or len(getValidLocations) == 0
+    return gameOverCheck(board, PLAYER_PIECE) or gameOverCheck(board, AI_PIECE) or len(getValidLocations(board)) == 0
 
 # Implimenting minimax algorithm
 def minimax(board, depth, maximizingPlayer):
@@ -160,13 +161,13 @@ def minimax(board, depth, maximizingPlayer):
 
     if isTerminal := isTerminalNode(board):
         if gameOverCheck(board, AI_PIECE):
-            return math.inf
+            return (None, math.inf)
         elif gameOverCheck(board, PLAYER_PIECE):
-            return -math.inf
+            return (None, -math.inf)
         else: 
-            return 0
+            return (None, 0)
     elif depth == 0:
-        return scorePosition(board, AI)
+        return (None, scorePosition(board, AI_PIECE))
 
     if maximizingPlayer:
         value = -math.inf
@@ -176,27 +177,28 @@ def minimax(board, depth, maximizingPlayer):
             r = getNextOpenRow(board, c)
             tempBoard = board.copy()
             dropPiece(tempBoard, r, c, AI_PIECE)
-            newScore = minimax(tempBoard, depth - 1, False)
+            newScore = minimax(tempBoard, depth - 1, False)[1]
 
             if newScore > value:
                 value = newScore
                 column = c
 
-            return column, value
-
     # Minimizing player
     else:
         value = math.inf
+        column = random.choice(validLocations)
+        
         for c in validLocations:
             r = getNextOpenRow(board, c)
             tempBoard = board.copy()
             dropPiece(tempBoard, r, c, PLAYER_PIECE)
-            newScore = minimax(tempBoard, depth - 1, True)
+            newScore = minimax(tempBoard, depth - 1, True)[1]
 
             if newScore < value:
                 value = newScore
                 column = c
-                
-            return column, value
+
+
+    return column, value
     
     
