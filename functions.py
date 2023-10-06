@@ -149,3 +149,54 @@ def pickBestMove(board, piece):
 # Getting valid locations for AI
 def getValidLocations(board):
     return [c for c in range(COLUMN_COUNT) if isValidLocation(board, c)]
+
+# Checking for terminal nodes
+def isTerminalNode(board):
+    return gameOverCheck(board, PLAYER_PIECE) or gameOverCheck(board, AI_PIECE) or len(getValidLocations) == 0
+
+# Implimenting minimax algorithm
+def minimax(board, depth, maximizingPlayer):
+    validLocations = getValidLocations(board)
+
+    if isTerminal := isTerminalNode(board):
+        if gameOverCheck(board, AI_PIECE):
+            return math.inf
+        elif gameOverCheck(board, PLAYER_PIECE):
+            return -math.inf
+        else: 
+            return 0
+    elif depth == 0:
+        return scorePosition(board, AI)
+
+    if maximizingPlayer:
+        value = -math.inf
+        column = random.choice(validLocations)
+
+        for c in validLocations:
+            r = getNextOpenRow(board, c)
+            tempBoard = board.copy()
+            dropPiece(tempBoard, r, c, AI_PIECE)
+            newScore = minimax(tempBoard, depth - 1, False)
+
+            if newScore > value:
+                value = newScore
+                column = c
+
+            return column, value
+
+    # Minimizing player
+    else:
+        value = math.inf
+        for c in validLocations:
+            r = getNextOpenRow(board, c)
+            tempBoard = board.copy()
+            dropPiece(tempBoard, r, c, PLAYER_PIECE)
+            newScore = minimax(tempBoard, depth - 1, True)
+
+            if newScore < value:
+                value = newScore
+                column = c
+                
+            return column, value
+    
+    
