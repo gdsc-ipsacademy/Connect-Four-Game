@@ -7,28 +7,28 @@ import math
 from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE
 
 # Creating board
-def createBoard():
+def create_board():
     return np.zeros((ROW_COUNT,COLUMN_COUNT))
 
 # Creating the board
-board = createBoard()
+board = create_board()
 
 # Checking if the top row of a selected column is empty or not
-def isValidLocation(board, col):
+def is_valid_location(board, col):
     return board[ROW_COUNT-1][col] == 0
 
 # Getting the lowest empty slot of the selected column
-def getNextOpenRow(board, col):
+def get_next_open_row(board, col):
     for slot in range(ROW_COUNT):
         if board[slot][col] == 0:
             return slot
 
 # Dropping the piece in the board
-def dropPiece(board, row, col, piece):
+def drop_piece(board, row, col, piece):
     board[row][col] = piece
 
 # Checking if the game is over
-def gameOverCheck(board, piece):
+def game_over_check(board, piece):
     
     # Checking horizontal win
     for c, r in itertools.product(range(COLUMN_COUNT - 3), range(ROW_COUNT)):
@@ -54,7 +54,7 @@ def gameOverCheck(board, piece):
 screen = pygame.display.set_mode(size)
 
 # Drawing board graphics
-def drawBoard(board):
+def draw_board(board):
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
         pygame.draw.rect(screen, colors["VERDIGRIS"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
