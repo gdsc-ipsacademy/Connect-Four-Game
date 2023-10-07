@@ -9,92 +9,98 @@ from functions import createBoard, isValidLocation, getNextOpenRow, dropPiece, g
     board, screen
 from scoreAI import pickBestMove
 from minmaxAI import minimax
+from ui_components import Button
 
-gameOver = False
-turn = random.randint(PLAYER, AI)
-
-# Initialising the game
-pygame.init()
-
-# Display game window title
-pygame.display.set_caption("Connect Four")
-
-# Drawing board
-drawBoard(board)
-pygame.display.update()
-
-myfont = pygame.font.SysFont("monospace", 80)
-
-# Game loop
-while not gameOver:
-
-    # Getting the events
-    for event in pygame.event.get():
-
-        # Checking if the game has been quit
-        if event.type == pygame.QUIT:
-            sys.exit()
-
-        # Checking mouse hover event
-        if event.type == pygame.MOUSEMOTION:
-            pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
-            posx = event.pos[0]
-            if turn == PLAYER:
-                pygame.draw.circle(screen, colors["CERISE"], (posx, int(SQUARESIZE / 2)), RADIUS)
-
+class ConnectFour:
+    def __init__(self):
+        pygame.init()
+        self.gameOver = False
+        self.turn = random.randint(PLAYER, AI)
+        self.board = createBoard()
+        self.myfont = pygame.font.SysFont("monospace", 80)
+        button_width = 250
+        button_height = 100
+        padding = 20
+        restart_button_y = height // 2
+        quit_button_y = restart_button_y + button_height + padding
+        center_x = width // 2 - button_width // 2
+        self.quit_button = Button((255, 0, 0), center_x, quit_button_y, button_width, button_height, 'Quit')
+        self.restart_button = Button((0, 255, 0), center_x, restart_button_y, button_width, button_height, 'Restart')
+        pygame.display.set_caption("Connect Four")
+        drawBoard(self.board)
         pygame.display.update()
 
-        # Checking mouse click event
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
-            posx = event.pos[0]
+    def handle_mouse_motion(self, event):
+        pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
+        posx = event.pos[0]
+        if self.turn == PLAYER:
+            pygame.draw.circle(screen, colors["CERISE"], (posx, int(SQUARESIZE / 2)), RADIUS)
+        pygame.display.update()
 
-            # Ask for player 1 input
-            if turn == PLAYER:
-                col = int(math.floor(posx / SQUARESIZE))
+    def handle_mouse_button_down(self, event):
+        pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
+        posx = event.pos[0]
+        if self.turn == PLAYER:
+            col = int(math.floor(posx / SQUARESIZE))
+            if isValidLocation(self.board, col):
+                row = getNextOpenRow(self.board, col)
+                dropPiece(self.board, row, col, PLAYER_PIECE)
+                if gameOverCheck(self.board, PLAYER_PIECE):
+                    self.display_winner("You win!! ^_^")
+                self.turn ^= 1
+                drawBoard(self.board)
+        if self.gameOver:
+            if self.quit_button.isOver((posx, event.pos[1])):
+                sys.exit()
+            elif self.restart_button.isOver((posx, event.pos[1])):
+                self.__init__()
 
-                if isValidLocation(board, col):
-                    row = getNextOpenRow(board, col)
-                    dropPiece(board, row, col, PLAYER_PIECE)
+    def ai_move(self):
+        col, minimaxScore = minimax(self.board, 6, -math.inf, math.inf, True)
+        if isValidLocation(self.board, col):
+            row = getNextOpenRow(self.board, col)
+            dropPiece(self.board, row, col, AI_PIECE)
+            if gameOverCheck(self.board, AI_PIECE):
+                self.display_winner("AI wins!! :[")
+            drawBoard(self.board)
+            self.turn ^= 1
 
-                    if gameOverCheck(board, PLAYER_PIECE):
-                        label = myfont.render("You win!! ^_^", 1, colors["MISTYROSE"])
-                        screen.blit(label, (40, 10))
-                        gameOver = True
+    def display_winner(self, message):
+        label = self.myfont.render(message, 1, colors["MISTYROSE"])
+        screen.blit(label, (40, 10))
+        self.gameOver = True
 
-                    turn ^= 1
+    def handle_game_over(self):
+        while self.gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    posx, posy = event.pos
+                    if self.quit_button.isOver((posx, posy)):
+                        sys.exit()
+                    elif self.restart_button.isOver((posx, posy)):
+                        self.__init__()
+                        self.game_start()  # You need to call game_start again to restart the game loop
 
-                    drawBoard(board)
+            self.quit_button.draw(screen, (0, 0, 0))
+            self.restart_button.draw(screen, (0, 0, 0))
+            pygame.display.update()
 
-    # Ask for player 2 input
-    if turn == AI and not gameOver:
+    def game_start(self):
+        while not self.gameOver:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEMOTION:
+                    self.handle_mouse_motion(event)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.handle_mouse_button_down(event)
+            if self.turn == AI and not self.gameOver:
+                self.ai_move()
+            if self.gameOver:
+                self.handle_game_over()
 
-        # Random move selection
-        # col = random.randint(0, COLUMN_COUNT - 1)
-        # Score based selection
-        # col = pickBestMove(board, AI_PIECE)
-        # Minmax based selection
-        col, minimaxScore = minimax(board, 6, -math.inf , math.inf, True)
-
-
-        if isValidLocation(board, col):
-
-            # Adding delay to AI move
-            # pygame.time.wait(500)
-
-            row = getNextOpenRow(board, col)
-            dropPiece(board, row, col, AI_PIECE)
-
-            if gameOverCheck(board, AI_PIECE):
-                label = myfont.render("AI wins!! :[", 1, colors["MISTYROSE"])
-                screen.blit(label, (40, 10))
-                gameOver = True
-
-            drawBoard(board)
-
-            # Switching turns between players
-            turn ^= 1
-
-    # Wait after game is over 
-    if gameOver:
-        pygame.time.wait(3000)
+if __name__ == "__main__":
+    game = ConnectFour()
+    game.game_start()
