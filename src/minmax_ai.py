@@ -3,7 +3,7 @@ import random
 
 from variables import ROW_COUNT, COLUMN_COUNT, PLAYER_PIECE, AI_PIECE
 from functions import is_valid_location, game_over_check, get_next_open_row, drop_piece
-from scoreAI import score_position
+from score_ai import score_position
 
 # Getting valid locations for AI
 def get_valid_locations(board):

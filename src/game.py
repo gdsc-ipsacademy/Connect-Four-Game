@@ -7,8 +7,8 @@ from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors,
     PLAYER_PIECE, AI_PIECE
 from functions import create_board, is_valid_location, get_next_open_row, drop_piece, game_over_check, draw_board, \
     board, screen
-from scoreAI import pick_best_move
-from minmaxAI import minimax
+from score_ai import pick_best_move
+from minmax_ai import minimax
 from ui_components import Button
 
 class ConnectFour:
