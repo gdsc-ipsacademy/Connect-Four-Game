@@ -10,14 +10,15 @@ A game of connect four against AI.
 # Directory structure
 - [variables.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/variables.py) contains all the GLOBAL variables for the project so that they are easy to find and change if ever needed. Helps in writing clean code.
 - [functions.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/functions.py) contains all the functions used in the game loop. This helps in bundling the functions together so that they are easy to find, edit and are easily accessible throughout the project. Keeps the main file clean as well.
-- [scoreAI.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/scoreAI.py) contains the functions for the score based AI version.
-- [minmaxAI.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/minmaxAI.py) contains the functions for the minmax algorithm based AI version.
-- [game.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/game.py) is the main file which contains the game loop and executes the software.
+- [ui_components.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/ui_components.py) conatins all the UI elements for the game. Helps in keeping UI methods and other methods separate.
+- [score_ai.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/score_ai.py) contains the functions for the score based AI version.
+- [minmax_ai.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/minmax_ai.py) contains the functions for the minmax algorithm based AI version.
+- [game.py](https://github.com/gdsc-ipsacademy/Connect-Four-Game/blob/main/src/game.py) contains the game loop and executes the software.
 
 # Version information
 - [v0.1.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v0.1.0) contains the base game without AI. It just has human vs human mode where turns switch between both until the game is over.
 - [v1.0.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.1) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
-- [v1.2.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.2.0) contains the game with an AI that uses minmax algorithm with alpha-beta pruning, calculating upto depth 7, which makes it impossible to beat. This version contains just human vs AI mode where turns switch between both until the game is over.
+- [v1.2.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.2.1) contains the game with an AI that uses minmax algorithm with alpha-beta pruning, calculating upto depth 7, which makes it impossible to beat. This version contains just human vs AI mode where turns switch between both until the game is over.
 
 # How to run the game?
 1. Clone the repository to your machine following [how to clone a repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) documentation.
