@@ -45,6 +45,7 @@ class ConnectFour:
             if is_valid_location(self.board, col):
                 self._extracted_from_ai_move_7(col, PLAYER_PIECE, "You win!! ^_^")
                 self.turn ^= 1
+                self.render_thinking("AI is thinking...")
                 draw_board(self.board)
         if self.game_over:
             if self.quit_button.is_over((posx, event.pos[1])):
@@ -56,6 +57,7 @@ class ConnectFour:
         col, minimax_score = minimax(self.board, 6, -math.inf, math.inf, True)
         if is_valid_location(self.board, col):
             self._extracted_from_ai_move_7(col, AI_PIECE, "AI wins!! :[")
+            self.clear_label()
             draw_board(self.board)
             self.turn ^= 1
 
@@ -101,6 +103,17 @@ class ConnectFour:
                 self.ai_move()
             if self.game_over:
                 self.handle_game_over()
+
+
+    def clear_label(self):
+        pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
+
+
+    def render_thinking(self, text):
+        self.clear_label(text)
+        label = pygame.font.SysFont("monospace", 70).render(text, 1, colors["MISTYROSE"])
+        screen.blit(label, (40, 10))
+
 
 if __name__ == "__main__":
     game = ConnectFour()
