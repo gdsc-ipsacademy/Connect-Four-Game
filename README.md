@@ -18,7 +18,7 @@ A game of connect four against AI.
 # Version information
 - [v0.1.0](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v0.1.0) contains the base game without AI. It just has human vs human mode where turns switch between both until the game is over.
 - [v1.0.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.0.1) contains the game with an AI that uses scoring method to try and beat the human player. This version contains just human vs AI mode where turns switch between both until the game is over.
-- [v1.2.1](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.2.1) contains the game with an AI that uses minmax algorithm with alpha-beta pruning, calculating upto depth 7, which makes it impossible to beat. This version contains just human vs AI mode where turns switch between both until the game is over.
+- [v1.2.2](https://github.com/gdsc-ipsacademy/Connect-Four-Game/releases/tag/v1.2.2) contains the game with an AI that uses minmax algorithm with alpha-beta pruning, calculating upto depth 7, which makes it impossible to beat. This version contains just human vs AI mode where turns switch between both until the game is over.
 
 # How to run the game?
 1. Clone the repository to your machine following [how to clone a repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) documentation.
