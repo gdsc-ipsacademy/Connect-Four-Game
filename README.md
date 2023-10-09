@@ -28,9 +28,9 @@ A game of connect four against AI.
 
 3. Activate the virtual environment by running either `<virtual-environment-name>/Scripts/activate.bat` in CMD or `<virtual-environment-name>/Scripts/Activate.ps1` in PowerShell.
 
-(To deactivate the virtual environment run the command `deactivate`.
+(To deactivate the virtual environment run the command `deactivate`.)
 
 4. Install the requirements in the virtual environment by running `pip install -r requirements.txt`.
 5. Run the game by running `python -u <directory path>\Connect-Four-Game\src\game.py`
 
-If you don't want to go through the hassle of creating a viertual environment, just run the commands in steps 4 and 5.
+If you don't want to go through the hassle of creating a virtual environment, just run the commands in steps 4 and 5.
