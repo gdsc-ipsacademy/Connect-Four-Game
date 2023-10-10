@@ -3,7 +3,7 @@ import sys
 import math
 import random
 
-from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
+from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, ai_move, self_move, ai_wins_sound, player_wins_sound, \
     PLAYER_PIECE, AI_PIECE
 from functions import create_board, is_valid_location, get_next_open_row, drop_piece, game_over_check, draw_board, \
     board, screen
@@ -14,6 +14,7 @@ from ui_components import Button
 class ConnectFour:
     def __init__(self):
         pygame.init()
+        pygame.mixer.init() #added to initialize sound 
         self.game_over = False
         self.turn = random.randint(PLAYER, AI)
         self.board = create_board()
@@ -45,6 +46,7 @@ class ConnectFour:
             if is_valid_location(self.board, col):
                 self._extracted_from_ai_move_7(col, PLAYER_PIECE, "You win!! ^_^")
                 self.turn ^= 1
+                self_move.play()
                 self.render_thinking("Thinking...")
                 draw_board(self.board)
         if self.game_over:
@@ -60,6 +62,8 @@ class ConnectFour:
             self._extracted_from_ai_move_7(col, AI_PIECE, "AI wins!! :[")
             draw_board(self.board)
             self.turn ^= 1
+            ai_move.play()
+
 
     # TODO Rename this here and in `handle_mouse_button_down` and `ai_move`
     def _extracted_from_ai_move_7(self, col, arg1, arg2):
@@ -69,6 +73,10 @@ class ConnectFour:
             self.display_winner(arg2)
 
     def display_winner(self, message):
+        if message == "AI wins!! :[":
+            ai_wins_sound.play()
+        elif message == "You win!! ^_^":
+            player_wins_sound.play()
         label = self.myfont.render(message, 1, colors["MISTYROSE"])
         screen.blit(label, (40, 10))
         self.game_over = True

@@ -30,3 +30,11 @@ AI_PIECE = 2
 
 WINDOW_LENGTH = 4
 EMPTY = 0
+
+import pygame
+import os
+pygame.mixer.init()
+ai_move = pygame.mixer.Sound(os.path.join('src\sound', 'AI_sound.ogg'))
+self_move = pygame.mixer.Sound(os.path.join('src\sound','self_sound.ogg'))
+ai_wins_sound = pygame.mixer.Sound(os.path.join('src\sound',"looser.ogg"))
+player_wins_sound = pygame.mixer.Sound(os.path.join('src\sound',"winner.ogg"))
