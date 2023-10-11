@@ -2,12 +2,9 @@ import math
 import random
 
 from variables import ROW_COUNT, COLUMN_COUNT, PLAYER_PIECE, AI_PIECE
-from functions import isValidLocation, gameOverCheck, getNextOpenRow, dropPiece
+from functions import isValidLocation, gameOverCheck, getNextOpenRow, dropPiece, getValidLocations
 from scoreAI import scorePosition
 
-# Getting valid locations for AI
-def getValidLocations(board):
-    return [c for c in range(COLUMN_COUNT) if isValidLocation(board, c)]
 
 # Checking for terminal nodes
 def isTerminalNode(board):

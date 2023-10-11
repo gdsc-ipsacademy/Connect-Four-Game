@@ -2,6 +2,7 @@ import pygame
 import sys
 import math
 import random
+import time
 
 from enum import Enum
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
@@ -64,13 +65,19 @@ class ConnectFour:
             elif self.restart_button.isOver((posx, event.pos[1])):
                 self.__init__()
 
+
     def ai_move(self):
+        thinking_time = 3
         if self.difficulty == Difficulty.EASY:
             # Make random move
+            col = random.randint(0, COLUMN_COUNT-1)
+            time.sleep(thinking_time)
         if self.difficulty == Difficulty.INTERMEDIATE:
-            # AI uses score method but only in two random directions instead of all four.
+            pickBestMove(self.board,
+                         AI_PIECE,
+                         directions=tuple(1 if i in random.sample(range(4), 2) else 0 for i in range(4)))
         if self.difficulty == Difficulty.HARD:
-            # AI uses score method in all four directions.
+            pickBestMove(self.board, AI_PIECE)
         if self.difficulty == Difficulty.IMPOSSIBLE:
             col, minimaxScore = minimax(self.board, 6, -math.inf, math.inf, True)
         if self.difficulty == Difficulty.GODMODE:
@@ -81,8 +88,8 @@ class ConnectFour:
             if gameOverCheck(self.board, AI_PIECE):
                 self.display_winner("AI wins!! :[")
                 self.gameOver = True
-            drawBoard(self.board)
             self.turn ^= 1
+            drawBoard(self.board)
 
     def display_winner(self, message):
         label = self.myfont.render(message, 1, colors["MISTYROSE"])

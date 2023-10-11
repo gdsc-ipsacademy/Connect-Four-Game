@@ -69,3 +69,5 @@ def drawBoard(board):
     pygame.display.update()
     
     
+def getValidLocations(board):
+    return [c for c in range(COLUMN_COUNT) if isValidLocation(board, c)]
