@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import pygame
+import os
+pygame.mixer.init()
 class Button:
     def __init__(self, color, x, y, width, height, text=''):
         self.color = color
@@ -23,3 +25,10 @@ class Button:
         # Pos is the mouse position or a tuple of (x,y) coordinates
         if self.x < pos[0] < self.x + self.width and self.y < pos[1] < self.y + self.height:
             return True
+        
+ai_move = pygame.mixer.Sound(os.path.join('sound', 'AI_sound.ogg'))
+self_move = pygame.mixer.Sound(os.path.join('sound','self_sound.ogg'))
+ai_wins_sound = pygame.mixer.Sound(os.path.join('sound',"looser.ogg"))
+player_wins_sound = pygame.mixer.Sound(os.path.join('sound',"winner.ogg"))
+        
+    
