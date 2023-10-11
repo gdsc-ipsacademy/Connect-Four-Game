@@ -62,5 +62,4 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 
             if alpha >= beta:
                 break
-
     return column, value
