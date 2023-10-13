@@ -125,3 +125,6 @@ class ConnectFour:
 if __name__ == "__main__":
     game = ConnectFour()
     game.game_start()
+
+
+# TODO Complete the game and make a downloadable file for the game. Use pybag to take the game to the web.
