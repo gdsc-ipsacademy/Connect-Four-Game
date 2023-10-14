@@ -74,7 +74,7 @@ class ConnectFour:
 
 
     def ai_move(self):
-        thinking_time = 3
+        thinking_time = 1
         if self.difficulty == Difficulty.EASY:
             col = random.randint(0, COLUMN_COUNT-1)
             time.sleep(thinking_time + 1)
