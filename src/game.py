@@ -67,17 +67,16 @@ class ConnectFour:
 
 
     def ai_move(self):
-        thinking_time = 3
+        thinking_time = 1
         if self.difficulty == Difficulty.EASY:
-            # Make random move
             col = random.randint(0, COLUMN_COUNT-1)
             time.sleep(thinking_time)
         if self.difficulty == Difficulty.INTERMEDIATE:
-            pickBestMove(self.board,
+            col = pickBestMove(self.board,
                          AI_PIECE,
                          directions=tuple(1 if i in random.sample(range(4), 2) else 0 for i in range(4)))
         if self.difficulty == Difficulty.HARD:
-            pickBestMove(self.board, AI_PIECE)
+            col = pickBestMove(self.board, AI_PIECE)
         if self.difficulty == Difficulty.IMPOSSIBLE:
             col, minimaxScore = minimax(self.board, 6, -math.inf, math.inf, True)
         if self.difficulty == Difficulty.GODMODE:
