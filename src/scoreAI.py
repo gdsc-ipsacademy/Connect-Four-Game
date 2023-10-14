@@ -2,7 +2,7 @@ import random
 import itertools
 
 from variables import ROW_COUNT, COLUMN_COUNT, PLAYER_PIECE, AI_PIECE, WINDOW_LENGTH, EMPTY
-from functions import getValidLocations
+from functions import getValidLocations, getNextOpenRow, dropPiece
 
 # Evaluating scores of connections
 def evaluateWindow(window, piece):
@@ -27,7 +27,7 @@ def evaluateWindow(window, piece):
     return score
 
 # Getting scores for connections
-def scorePosition(board, piece, directions):
+def scorePosition(board, piece, directions=(1, 1, 1, 1)):
 
     score = 0
 
@@ -44,7 +44,7 @@ def scorePosition(board, piece, directions):
                 window = rowArray[c : c + WINDOW_LENGTH]
                 score += evaluateWindow(window, piece)
 
-    if directions[2]:
+    if directions[1]:
         # Vertical score
         for c in range(COLUMN_COUNT):
             colArray = [int(i) for i in list(board[ : , c])]
@@ -52,13 +52,13 @@ def scorePosition(board, piece, directions):
                 window = colArray[r : r + WINDOW_LENGTH]
                 score += evaluateWindow(window, piece)
 
-    if directions[3]:
+    if directions[2]:
         # Positive slope diagonal score
         for r, c in itertools.product(range(ROW_COUNT - 3), range(COLUMN_COUNT - 3)):
             window = [board[r + i][c + i] for i in range(WINDOW_LENGTH)]
             score += evaluateWindow(window, piece)
 
-    if directions[4]:
+    if directions[3]:
         # Negative slope diagonal score
         for r, c in itertools.product(range(ROW_COUNT - 3), range(COLUMN_COUNT - 3)):
             window = [board[r + 3 - i][c + i] for i in range(WINDOW_LENGTH)]
@@ -68,7 +68,6 @@ def scorePosition(board, piece, directions):
 
 # Picking best moves based on scores
 def pickBestMove(board, piece, directions=(1, 1, 1, 1)):
-
     validLocations = getValidLocations(board)
 
     bestScore = -10000
