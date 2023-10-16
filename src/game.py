@@ -52,18 +52,19 @@ class ConnectFour:
         self.restart_button = Button((0, 255, 0), self.center_x, restart_button_y, game_end_button_width, game_end_button_height, 'Restart')
         pygame.display.set_caption("Connect Four")
         self.difficulty = self.choose_difficulty()
+        screen.fill((56, 75, 199))
         draw_board(self.board)
         pygame.display.update()
 
     def handle_mouse_motion(self, event):
-        pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
+        pygame.draw.rect(screen, (56, 75, 199), (0, 0, width, SQUARESIZE))
         posx = event.pos[0]
         if self.turn == PLAYER:
             pygame.draw.circle(screen, colors["CERISE"], (posx, int(SQUARESIZE / 2)), RADIUS)
         pygame.display.update()
 
     def handle_mouse_button_down(self, event):
-        pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
+        pygame.draw.rect(screen, (56, 75, 199), (0, 0, width, SQUARESIZE))
         posx = event.pos[0]
         if self.turn == PLAYER:
             col = int(math.floor(posx / SQUARESIZE))
@@ -123,8 +124,9 @@ class ConnectFour:
         pygame.display.update()
 
     def handle_game_over(self):
-        self.restart_button.draw(screen)
         self.quit_button.draw(screen)
+        self.restart_button.draw(screen)
+        pygame.display.update()
         while self.game_over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -141,6 +143,7 @@ class ConnectFour:
 
 
     def choose_difficulty(self):
+<<<<<<< HEAD
         print("ENTERING DIFFICULTY CHOICE")
         btn_y = [i * (level_button_height + 5) + height/2 for i in range(-3,3)]
         self.easy = Button(colors["GREEN"], self.center_x, btn_y[0], level_button_width , level_button_height, 'Easy')
@@ -158,7 +161,10 @@ class ConnectFour:
         pygame.display.update()
 
         while True:
+            pygame.display.update()
             for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     posx, posy = event.pos
                     if self.easy.is_over((posx, posy)):
