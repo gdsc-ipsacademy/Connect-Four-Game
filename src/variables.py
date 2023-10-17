@@ -16,7 +16,7 @@ colors = {
     "DARKGREY": (5, 5, 5),
     "GREEN": (50, 186, 16),
     "YELLOW": (173, 141, 15),
-    "RED": (153, 23, 6)
+    "RED": (153, 23, 6),
 }
 
 # Values for player and AI turns

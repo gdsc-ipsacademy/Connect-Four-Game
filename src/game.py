@@ -170,12 +170,12 @@ class ConnectFour:
                               'GODMODE',
                                 text_color=text_color)
 
-        screen.fill((56, 75, 199))
-        self.easy.draw(screen)
-        self.intermediate.draw(screen)
-        self.hard.draw(screen)
-        self.impossible.draw(screen)
-        self.godmode.draw(screen)
+        screen.fill((236, 73, 19))
+        self.easy.draw(screen, outline_color=colors['DARKGREY'])
+        self.intermediate.draw(screen, outline_color=colors['DARKGREY'])
+        self.hard.draw(screen, outline_color=colors['DARKGREY'])
+        self.impossible.draw(screen, outline_color=colors['DARKGREY'])
+        self.godmode.draw(screen, outline_color=colors['DARKGREY'])
 
         while True:
             pygame.display.update()

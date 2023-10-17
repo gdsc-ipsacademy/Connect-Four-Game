@@ -57,7 +57,7 @@ screen = pygame.display.set_mode(size)
 def draw_board(board):
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
-        pygame.draw.rect(screen, colors["VERDIGRIS"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
+        pygame.draw.rect(screen, colors["YELLOW"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
         pygame.draw.circle(screen, colors["CHARCOAL"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):

@@ -21,15 +21,15 @@ class Button:
             print("Failed to find font, using comicsans.")
             self.font = pygame.font.SysFont('comicsans', self.font_size)
 
-    def draw(self, win, outline=None):
+    def draw(self, win, outline_color=None, outline_width=5):
         self._draw_button(win)
-        if outline:
-            self._draw_outline(win, outline)
+        if outline_color:
+            self._draw_outline(win, outline_color, outline_width)
         if self.text:
             self._draw_text(win)
 
-    def _draw_outline(self, win, outline):
-        pygame.draw.rect(win, outline, (self.x-2, self.y-2, self.width+4, self.height+4), 0)
+    def _draw_outline(self, win, color, width):
+        pygame.draw.rect(win, color, (self.x-2, self.y-2, self.width+4, self.height+4), width)
 
     def _draw_button(self, win):
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height), 0)
