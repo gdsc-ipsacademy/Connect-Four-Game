@@ -62,9 +62,9 @@ def draw_board(board):
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
         if board[r][c] == PLAYER_PIECE:
-            pygame.draw.circle(screen, colors["CERISE"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            pygame.draw.circle(screen, colors["GREEN"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
         elif board[r][c] == AI_PIECE:
-            pygame.draw.circle(screen, colors["ICTERINE"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            pygame.draw.circle(screen, colors["RED"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
 
     pygame.display.update()
 
