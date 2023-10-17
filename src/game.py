@@ -95,6 +95,8 @@ class ConnectFour:
         drop_piece(self.board, row, col, arg1)
         if game_over_check(self.board, arg1):
             self.display_winner(arg2)
+            self.game_over = True
+            return self.handle_game_over()
 
     def display_winner(self, message):
         if message == "AI wins!! :[":
@@ -103,8 +105,11 @@ class ConnectFour:
             player_wins_sound.play()
         label = self.myfont.render(message, 1, colors["MISTYROSE"])
         screen.blit(label, (40, 10))
+        pygame.display.update()
 
     def handle_game_over(self):
+        self.restart_button.draw(screen)
+        self.quit_button.draw(screen)
         while self.game_over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -116,6 +121,8 @@ class ConnectFour:
                     elif self.restart_button.is_over((posx, posy)):
                         self.__init__()
                         return self.game_start()
+
+            pygame.display.update()
 
 
     def choose_difficulty(self):
