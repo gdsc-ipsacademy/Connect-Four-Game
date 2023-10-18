@@ -9,7 +9,7 @@ from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors,
     PLAYER_PIECE, AI_PIECE, thinking_time, game_end_button_width, game_end_button_height, level_button_height, \
     level_button_width
 from functions import create_board, is_valid_location, get_next_open_row, drop_piece, game_over_check, draw_board, \
-    board, screen
+    board, screen, draw_dotted_circle
 from score_ai import pick_best_move
 from minmax_ai import minimax
 from ui_components import Button
@@ -63,7 +63,7 @@ class ConnectFour:
         pygame.draw.rect(screen, colors["DARKGREY"], (0, 0, width, SQUARESIZE))
         posx = event.pos[0]
         if self.turn == PLAYER:
-            pygame.draw.circle(screen, colors["GREEN"], (posx, int(SQUARESIZE / 2)), RADIUS)
+            draw_dotted_circle(screen, posx, int(SQUARESIZE / 2), RADIUS, colors["YELLOW"], gap_length=6)
         pygame.display.update()
 
     def handle_mouse_button_down(self, event):
