@@ -2,20 +2,29 @@ import pygame
 import sys
 import math
 import random
+import time
 
+from enum import Enum
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
     PLAYER_PIECE, AI_PIECE
 from functions import create_board, is_valid_location, get_next_open_row, drop_piece, game_over_check, draw_board, \
     board, screen
 from score_ai import pick_best_move
 from minmax_ai import minimax
-from ui_components import Button 
-from ui_components import ai_move, self_move, ai_wins_sound, player_wins_sound 
+from ui_components import Button
+from ui_components import ai_move_sound, self_move_sound, ai_wins_sound, player_wins_sound
+
+class Difficulty(Enum):
+    EASY = 1
+    INTERMEDIATE = 2
+    HARD = 3
+    IMPOSSIBLE = 4
+    GODMODE = 5
 
 class ConnectFour:
     def __init__(self):
         pygame.init()
-        pygame.mixer.init() #added to initialize sound 
+        pygame.mixer.init() #added to initialize sound
         self.game_over = False
         self.turn = random.randint(PLAYER, AI)
         self.board = create_board()
@@ -25,10 +34,11 @@ class ConnectFour:
         padding = 20
         restart_button_y = height // 2
         quit_button_y = restart_button_y + button_height + padding
-        center_x = width // 2 - button_width // 2
-        self.quit_button = Button((255, 0, 0), center_x, quit_button_y, button_width, button_height, 'Quit')
-        self.restart_button = Button((0, 255, 0), center_x, restart_button_y, button_width, button_height, 'Restart')
+        self.center_x = width // 2 - button_width // 2
+        self.quit_button = Button((255, 0, 0), self.center_x, quit_button_y, button_width, button_height, 'Quit')
+        self.restart_button = Button((0, 255, 0), self.center_x, restart_button_y, button_width, button_height, 'Restart')
         pygame.display.set_caption("Connect Four")
+        self.difficulty = self.choose_difficulty()
         draw_board(self.board)
         pygame.display.update()
 
@@ -47,7 +57,7 @@ class ConnectFour:
             if is_valid_location(self.board, col):
                 self._extracted_from_ai_move_7(col, PLAYER_PIECE, "You win!! ^_^")
                 self.turn ^= 1
-                self_move.play()
+                self_move_sound.play()
                 self.render_thinking("Thinking...")
                 draw_board(self.board)
         if self.game_over:
@@ -56,15 +66,28 @@ class ConnectFour:
             elif self.restart_button.is_over((posx, event.pos[1])):
                 self.__init__()
 
+
     def ai_move(self):
-        col, minimax_score = minimax(self.board, 6, -math.inf, math.inf, True)
+        thinking_time = 1
+        if self.difficulty == Difficulty.EASY:
+            col = random.randint(0, COLUMN_COUNT-1)
+            time.sleep(thinking_time)
+        if self.difficulty == Difficulty.INTERMEDIATE:
+            col = pick_best_move(self.board,
+                                AI_PIECE,
+                                directions=tuple(1 if i in random.sample(range(4), 2) else 0 for i in range(4)))
+        if self.difficulty == Difficulty.HARD:
+            col = pick_best_move(self.board, AI_PIECE)
+        if self.difficulty == Difficulty.IMPOSSIBLE:
+            col, minimaxScore = minimax(self.board, 6, -math.inf, math.inf, True)
+        if self.difficulty == Difficulty.GODMODE:
+            col, minimaxScore = minimax(self.board, 7, -math.inf, math.inf, True)
         if is_valid_location(self.board, col):
             self.clear_label()
             self._extracted_from_ai_move_7(col, AI_PIECE, "AI wins!! :[")
             draw_board(self.board)
             self.turn ^= 1
-            ai_move.play()
-
+            ai_move_sound.play()
 
     # TODO Rename this here and in `handle_mouse_button_down` and `ai_move`
     def _extracted_from_ai_move_7(self, col, arg1, arg2):
@@ -72,6 +95,8 @@ class ConnectFour:
         drop_piece(self.board, row, col, arg1)
         if game_over_check(self.board, arg1):
             self.display_winner(arg2)
+            self.game_over = True
+            return self.handle_game_over()
 
     def display_winner(self, message):
         if message == "AI wins!! :[":
@@ -80,9 +105,11 @@ class ConnectFour:
             player_wins_sound.play()
         label = self.myfont.render(message, 1, colors["MISTYROSE"])
         screen.blit(label, (40, 10))
-        self.game_over = True
+        pygame.display.update()
 
     def handle_game_over(self):
+        self.restart_button.draw(screen)
+        self.quit_button.draw(screen)
         while self.game_over:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -93,11 +120,44 @@ class ConnectFour:
                         sys.exit()
                     elif self.restart_button.is_over((posx, posy)):
                         self.__init__()
-                        self.game_start()  # You need to call game_start again to restart the game loop
+                        return self.game_start()
 
-            self.quit_button.draw(screen, (0, 0, 0))
-            self.restart_button.draw(screen, (0, 0, 0))
             pygame.display.update()
+
+
+    def choose_difficulty(self):
+        print("ENTERING DIFFICULTY CHOICE")
+        btn_height = 50
+        btn_y = [i * (btn_height + 5) + height/2 for i in range(-3,3)]
+        self.easy = Button((0, 255, 0), self.center_x, btn_y[0], 250, btn_height, 'Easy')
+        self.intermediate = Button((0, 255, 0), self.center_x, btn_y[1], 250, btn_height, 'Intermediate')
+        self.hard = Button((255, 255, 0), self.center_x, btn_y[2], 250, btn_height, 'Hard')
+        self.impossible = Button((255, 255, 0), self.center_x, btn_y[3], 250, btn_height, 'Impossible')
+        self.godmode = Button((255, 0, 0), self.center_x, btn_y[4], 250, btn_height, 'God Mode')
+
+        screen.fill((0,0,0))
+        self.easy.draw(screen, (0, 0, 0))
+        self.intermediate.draw(screen, (0, 0, 0))
+        self.hard.draw(screen, (0, 0, 0))
+        self.impossible.draw(screen, (0, 0, 0))
+        self.godmode.draw(screen, (0, 0, 0))
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    posx, posy = event.pos
+                    if self.easy.is_over((posx, posy)):
+                        return Difficulty.EASY
+                    elif self.intermediate.is_over((posx, posy)):
+                        return Difficulty.INTERMEDIATE
+                    elif self.hard.is_over((posx, posy)):
+                        return Difficulty.HARD
+                    elif self.impossible.is_over((posx, posy)):
+                        return Difficulty.IMPOSSIBLE
+                    elif self.godmode.is_over((posx, posy)):
+                        return Difficulty.GODMODE
+
 
     def game_start(self):
         while not self.game_over:
@@ -112,7 +172,7 @@ class ConnectFour:
                 self.ai_move()
             if self.game_over:
                 self.handle_game_over()
-    
+
     def clear_label(self):
         pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
 
@@ -121,6 +181,7 @@ class ConnectFour:
         self.clear_label()
         label = pygame.font.SysFont("monospace", 60).render(text, 1, colors["MISTYROSE"])
         screen.blit(label, (40, 10))
+        pygame.display.update()
 
 if __name__ == "__main__":
     game = ConnectFour()
