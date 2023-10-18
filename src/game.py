@@ -6,7 +6,8 @@ import time
 
 from enum import Enum
 from variables import ROW_COUNT, COLUMN_COUNT, SQUARESIZE, size, RADIUS, colors, height, width, PLAYER, AI, \
-    PLAYER_PIECE, AI_PIECE
+    PLAYER_PIECE, AI_PIECE, thinking_time, game_end_button_width, game_end_button_height, level_button_height, \
+    level_button_width
 from functions import create_board, is_valid_location, get_next_open_row, drop_piece, game_over_check, draw_board, \
     board, screen
 from score_ai import pick_best_move
@@ -29,14 +30,12 @@ class ConnectFour:
         self.turn = random.randint(PLAYER, AI)
         self.board = create_board()
         self.myfont = pygame.font.SysFont("monospace", 80)
-        button_width = 250
-        button_height = 100
         padding = 20
         restart_button_y = height // 2
-        quit_button_y = restart_button_y + button_height + padding
-        self.center_x = width // 2 - button_width // 2
-        self.quit_button = Button((255, 0, 0), self.center_x, quit_button_y, button_width, button_height, 'Quit')
-        self.restart_button = Button((0, 255, 0), self.center_x, restart_button_y, button_width, button_height, 'Restart')
+        quit_button_y = restart_button_y + game_end_button_height + padding
+        self.center_x = width // 2 - game_end_button_width // 2
+        self.quit_button = Button((255, 0, 0), self.center_x, quit_button_y, game_end_button_width, game_end_button_height, 'Quit')
+        self.restart_button = Button((0, 255, 0), self.center_x, restart_button_y, game_end_button_width, game_end_button_height, 'Restart')
         pygame.display.set_caption("Connect Four")
         self.difficulty = self.choose_difficulty()
         draw_board(self.board)
@@ -68,16 +67,17 @@ class ConnectFour:
 
 
     def ai_move(self):
-        thinking_time = 1
         if self.difficulty == Difficulty.EASY:
             col = random.randint(0, COLUMN_COUNT-1)
-            time.sleep(thinking_time)
+            time.sleep(thinking_time + 1)
         if self.difficulty == Difficulty.INTERMEDIATE:
             col = pick_best_move(self.board,
                                 AI_PIECE,
                                 directions=tuple(1 if i in random.sample(range(4), 2) else 0 for i in range(4)))
+            time.sleep(thinking_time + 1.2)
         if self.difficulty == Difficulty.HARD:
             col = pick_best_move(self.board, AI_PIECE)
+            time.sleep(thinking_time + 1.5)
         if self.difficulty == Difficulty.IMPOSSIBLE:
             col, minimaxScore = minimax(self.board, 6, -math.inf, math.inf, True)
         if self.difficulty == Difficulty.GODMODE:
@@ -127,20 +127,19 @@ class ConnectFour:
 
     def choose_difficulty(self):
         print("ENTERING DIFFICULTY CHOICE")
-        btn_height = 50
-        btn_y = [i * (btn_height + 5) + height/2 for i in range(-3,3)]
-        self.easy = Button((0, 255, 0), self.center_x, btn_y[0], 250, btn_height, 'Easy')
-        self.intermediate = Button((0, 255, 0), self.center_x, btn_y[1], 250, btn_height, 'Intermediate')
-        self.hard = Button((255, 255, 0), self.center_x, btn_y[2], 250, btn_height, 'Hard')
-        self.impossible = Button((255, 255, 0), self.center_x, btn_y[3], 250, btn_height, 'Impossible')
-        self.godmode = Button((255, 0, 0), self.center_x, btn_y[4], 250, btn_height, 'God Mode')
+        btn_y = [i * (level_button_height + 5) + height/2 for i in range(-3,3)]
+        self.easy = Button(colors["GREEN"], self.center_x, btn_y[0], level_button_width , level_button_height, 'Easy')
+        self.intermediate = Button(colors["LIGHT_GREEN"], self.center_x, btn_y[1], level_button_width , level_button_height, 'Intermediate')
+        self.hard = Button(colors["YELLOW"], self.center_x, btn_y[2], level_button_width , level_button_height, 'Hard')
+        self.impossible = Button(colors["ORANGE"], self.center_x, btn_y[3], level_button_width , level_button_height, 'Impossible')
+        self.godmode = Button(colors["RED"], self.center_x, btn_y[4], level_button_width , level_button_height, 'God Mode')
 
-        screen.fill((0,0,0))
-        self.easy.draw(screen, (0, 0, 0))
-        self.intermediate.draw(screen, (0, 0, 0))
-        self.hard.draw(screen, (0, 0, 0))
-        self.impossible.draw(screen, (0, 0, 0))
-        self.godmode.draw(screen, (0, 0, 0))
+        screen.fill(colors["BLACK"])
+        self.easy.draw(screen, colors["BLACK"])
+        self.intermediate.draw(screen, colors["BLACK"])
+        self.hard.draw(screen, colors["BLACK"])
+        self.impossible.draw(screen, colors["BLACK"])
+        self.godmode.draw(screen, colors["BLACK"])
         pygame.display.update()
 
         while True:
