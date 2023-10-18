@@ -48,30 +48,33 @@ class ConnectFour:
         restart_button_y = height // 2
         quit_button_y = restart_button_y + button_height + padding
         self.center_x = width // 2 - button_width // 2
-        self.quit_button = Button(colors["RED"], self.center_x, quit_button_y, button_width, button_height, 'Quit')
-        self.restart_button = Button(colors["GREEN"], self.center_x, restart_button_y, button_width, button_height, 'Restart')
+        self.quit_button = Button(colors["RED"], self.center_x, quit_button_y, button_width,
+                                  button_height, 'Quit')
+        self.restart_button = Button(colors["GREEN"], self.center_x, restart_button_y,
+                                     button_width, button_height,
+                                     'Restart')
         pygame.display.set_caption("Connect Four")
         self.difficulty = self.choose_difficulty()
-        screen.fill((56, 75, 199))
+        screen.fill(colors["DARKGREY"])
         draw_board(self.board)
         pygame.display.update()
 
     def handle_mouse_motion(self, event):
-        pygame.draw.rect(screen, (56, 75, 199), (0, 0, width, SQUARESIZE))
+        pygame.draw.rect(screen, colors["DARKGREY"], (0, 0, width, SQUARESIZE))
         posx = event.pos[0]
         if self.turn == PLAYER:
             pygame.draw.circle(screen, colors["GREEN"], (posx, int(SQUARESIZE / 2)), RADIUS)
         pygame.display.update()
 
     def handle_mouse_button_down(self, event):
-        pygame.draw.rect(screen, (56, 75, 199), (0, 0, width, SQUARESIZE))
+        pygame.draw.rect(screen, colors["DARKGREY"], (0, 0, width, SQUARESIZE))
         posx = event.pos[0]
         if self.turn == PLAYER:
             col = int(math.floor(posx / SQUARESIZE))
             if is_valid_location(self.board, col):
+                self_move_sound.play()
                 self._extracted_from_ai_move_7(col, PLAYER_PIECE, "You win!! ^_^")
                 self.turn ^= 1
-                self_move_sound.play()
                 self.render_thinking("Thinking...")
                 draw_board(self.board)
         if self.game_over:
@@ -119,15 +122,15 @@ class ConnectFour:
             ai_wins_sound.play()
         elif message == "You win!! ^_^":
             player_wins_sound.play()
-        label = self.myfont.render(message, 1, colors["MISTYROSE"])
+        label = self.myfont.render(message, 1, colors["DARKGREY"])
         screen.blit(label, (40, 10))
         pygame.display.update()
 
     def handle_game_over(self):
         self.clear_label()
         draw_board(self.board)
-        self.quit_button.draw(screen)
-        self.restart_button.draw(screen)
+        self.quit_button.draw(screen, outline_color=colors["DARKGREY"])
+        self.restart_button.draw(screen, outline_color=colors["DARKGREY"])
         pygame.display.update()
         while self.game_over:
             for event in pygame.event.get():
@@ -170,12 +173,12 @@ class ConnectFour:
                               'GODMODE',
                                 text_color=text_color)
 
-        screen.fill((236, 73, 19))
-        self.easy.draw(screen, outline_color=colors['DARKGREY'])
-        self.intermediate.draw(screen, outline_color=colors['DARKGREY'])
-        self.hard.draw(screen, outline_color=colors['DARKGREY'])
-        self.impossible.draw(screen, outline_color=colors['DARKGREY'])
-        self.godmode.draw(screen, outline_color=colors['DARKGREY'])
+        screen.fill(colors['GREY'])
+        self.easy.draw(screen)
+        self.intermediate.draw(screen)
+        self.hard.draw(screen)
+        self.impossible.draw(screen)
+        self.godmode.draw(screen)
 
         while True:
             pygame.display.update()
@@ -210,13 +213,15 @@ class ConnectFour:
             if self.game_over:
                 self.handle_game_over()
 
+            pygame.display.update()
+
     def clear_label(self):
-        pygame.draw.rect(screen, colors["CHARCOAL"], (0, 0, width, SQUARESIZE))
+        pygame.draw.rect(screen, colors["DARKGREY"], (0, 0, width, SQUARESIZE))
 
 
     def render_thinking(self, text):
         self.clear_label()
-        label = pygame.font.SysFont("monospace", 60).render(text, 1, colors["MISTYROSE"])
+        label = pygame.font.SysFont("monospace", 60).render(text, 1, colors["DARKGREY"])
         screen.blit(label, (40, 10))
         pygame.display.update()
 

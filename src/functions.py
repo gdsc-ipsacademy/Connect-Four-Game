@@ -4,6 +4,8 @@ import pygame
 import random
 import math
 
+
+from pygame import gfxdraw
 from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE
 
 # Creating board
@@ -57,17 +59,25 @@ screen = pygame.display.set_mode(size)
 def draw_board(board):
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
-        pygame.draw.rect(screen, colors["YELLOW"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-        pygame.draw.circle(screen, colors["CHARCOAL"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+        rect_pos = (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE)
+        rect_outline = (c*SQUARESIZE-2, r*SQUARESIZE+SQUARESIZE-2, SQUARESIZE+2, SQUARESIZE+2)
+        pygame.gfxdraw.box(screen, rect_pos, colors["BLUE"])
+        x, y = (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2))
+        pygame.gfxdraw.filled_circle(screen, x, y, RADIUS, colors["DARKGREY"])
+        pygame.gfxdraw.aacircle(screen, x, y, RADIUS, colors["DARKGREY"] )
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
         if board[r][c] == PLAYER_PIECE:
-            pygame.draw.circle(screen, colors["GREEN"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            pygame.gfxdraw.filled_circle(screen, int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2), RADIUS, colors["GREEN"])
         elif board[r][c] == AI_PIECE:
-            pygame.draw.circle(screen, colors["RED"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
-
+            pygame.gfxdraw.filled_circle(screen, int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2), RADIUS, colors["RED"])
+        pygame.gfxdraw.aacircle(screen, int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2), RADIUS, colors["DARKGREY"])
     pygame.display.update()
 
 
 def get_valid_locations(board):
     return [c for c in range(COLUMN_COUNT) if is_valid_location(board, c)]
+
+def draw_circle(surface, x, y, radius, color):
+    gfxdraw.aacircle(surface, x, y, radius, color)
+    gfxdraw.filled_circle(surface, x, y, radius, color)
