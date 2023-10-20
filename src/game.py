@@ -22,20 +22,6 @@ class Difficulty(Enum):
     IMPOSSIBLE = 4
     GODMODE = 5
 
-class Difficulty(Enum):
-    EASY = 1
-    INTERMEDIATE = 2
-    HARD = 3
-    IMPOSSIBLE = 4
-    GODMODE = 5
-
-class Difficulty(Enum):
-    EASY = 1
-    INTERMEDIATE = 2
-    HARD = 3
-    IMPOSSIBLE = 4
-    GODMODE = 5
-
 class ConnectFour:
     def __init__(self):
         pygame.init()
