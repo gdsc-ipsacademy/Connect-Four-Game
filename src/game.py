@@ -46,12 +46,12 @@ class ConnectFour:
         self.myfont = pygame.font.SysFont("monospace", 80)
         padding = 20
         restart_button_y = height // 2
-        quit_button_y = restart_button_y + button_height + padding
-        self.center_x = width // 2 - button_width // 2
-        self.quit_button = Button(colors["RED"], self.center_x, quit_button_y, button_width,
-                                  button_height, 'Quit')
+        quit_button_y = restart_button_y + game_end_button_height + padding
+        self.center_x = width // 2 - game_end_button_width // 2
+        self.quit_button = Button(colors["RED"], self.center_x, quit_button_y, game_end_button_width,
+                                  game_end_button_height, 'Quit')
         self.restart_button = Button(colors["GREEN"], self.center_x, restart_button_y,
-                                     button_width, button_height,
+                                     game_end_button_width, game_end_button_height,
                                      'Restart')
         pygame.display.set_caption("Connect Four")
         self.difficulty = self.choose_difficulty()
