@@ -2,6 +2,7 @@
 import pygame
 import os
 
+
 class Button:
     def __init__(self, color, x, y, width,
                  height, text='', font_size=35,
@@ -17,7 +18,9 @@ class Button:
         self.radius = radius
 
         try:
-            self.font = pygame.font.Font('../assets/fonts/Gabarito-SemiBold.ttf', self.font_size)
+            script_dir = os.path.dirname(os.path.realpath(__file__))
+            fonts_path = os.path.join(script_dir, '../assets/fonts')
+            self.font = pygame.font.Font(f'{fonts_path}/Gabarito-SemiBold.ttf', self.font_size)
         except pygame.error:
             print("Failed to find font, using comicsans.")
             self.font = pygame.font.SysFont('comicsans', self.font_size)
@@ -46,7 +49,10 @@ class Button:
 
 pygame.mixer.init()
 
-ai_move_sound = pygame.mixer.Sound(os.path.join('../assets/sound', 'AI_sound.ogg'))
-self_move_sound = pygame.mixer.Sound(os.path.join('../assets/sound','self_sound.ogg'))
-ai_wins_sound = pygame.mixer.Sound(os.path.join('../assets/sound',"looser.ogg"))
-player_wins_sound = pygame.mixer.Sound(os.path.join('../assets/sound',"winner.ogg"))
+script_dir = os.path.dirname(os.path.realpath(__file__))
+sound_path = os.path.join(script_dir, '../assets/sound')
+
+ai_move_sound = pygame.mixer.Sound(os.path.join(sound_path, 'AI_sound.ogg'))
+self_move_sound = pygame.mixer.Sound(os.path.join(sound_path,'self_sound.ogg'))
+ai_wins_sound = pygame.mixer.Sound(os.path.join(sound_path,"looser.ogg"))
+player_wins_sound = pygame.mixer.Sound(os.path.join(sound_path,"winner.ogg"))
