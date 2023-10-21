@@ -4,6 +4,8 @@ import pygame
 import random
 import math
 
+
+from pygame import gfxdraw
 from variables import ROW_COUNT, COLUMN_COUNT, size, colors, SQUARESIZE, RADIUS, height, width, PLAYER_PIECE, AI_PIECE
 
 # Creating board
@@ -55,19 +57,48 @@ screen = pygame.display.set_mode(size)
 
 # Drawing board graphics
 def draw_board(board):
+    for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
+        rect_pos = (c * SQUARESIZE, r * SQUARESIZE + SQUARESIZE, SQUARESIZE, SQUARESIZE)
+        pygame.gfxdraw.box(screen, rect_pos, colors["BLUE"])
+        x, y = (int(c * SQUARESIZE + SQUARESIZE / 2), int(r * SQUARESIZE + SQUARESIZE + SQUARESIZE / 2))
+
+        # Gradient shading for holes
+        for offset in range(RADIUS):
+            pygame.gfxdraw.filled_circle(screen, x, y, RADIUS - offset, (40 + offset, 40 + offset, 40 + offset))
 
     for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
-        pygame.draw.rect(screen, colors["VERDIGRIS"], (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-        pygame.draw.circle(screen, colors["CHARCOAL"], (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
-
-    for c, r in itertools.product(range(COLUMN_COUNT), range(ROW_COUNT)):
+        x, y = (int(c * SQUARESIZE + SQUARESIZE / 2), height - int(r * SQUARESIZE + SQUARESIZE / 2))
+        color = None
         if board[r][c] == PLAYER_PIECE:
-            pygame.draw.circle(screen, colors["CERISE"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            color = colors["GREEN"]
         elif board[r][c] == AI_PIECE:
-            pygame.draw.circle(screen, colors["ICTERINE"], (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            color = colors["RED"]
+
+        if color:
+            pygame.gfxdraw.filled_circle(screen, x, y, RADIUS, color)
+            # Reflection highlight for discs
+            pygame.gfxdraw.filled_circle(screen, x - RADIUS // 3, y - RADIUS // 3, RADIUS // 3, (255, 255, 255, 100))
+
+        pygame.gfxdraw.aacircle(screen, x, y, RADIUS, colors["DARKGREY"])
 
     pygame.display.update()
 
 
 def get_valid_locations(board):
     return [c for c in range(COLUMN_COUNT) if is_valid_location(board, c)]
+
+def draw_dotted_circle(surface, x, y, radius, color, dot_length=4, gap_length=4, line_width=3):
+    num_dots = int(2 * math.pi * radius / (dot_length + gap_length))
+    angle_between_dots = 2 * math.pi / num_dots
+
+    for i in range(num_dots):
+        start_angle = i * angle_between_dots
+        end_angle = start_angle + dot_length / radius
+
+        start_x = x + radius * math.cos(start_angle)
+        start_y = y + radius * math.sin(start_angle)
+
+        end_x = x + radius * math.cos(end_angle)
+        end_y = y + radius * math.sin(end_angle)
+
+        pygame.draw.line(surface, color, (start_x, start_y), (end_x, end_y), line_width)
