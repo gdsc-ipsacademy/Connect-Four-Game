@@ -207,7 +207,7 @@ class ConnectFour:
 
     def render_thinking(self, text):
         self.clear_label()
-        label = pygame.font.SysFont("monospace", 60).render(text, 1, colors["DARKGREY"])
+        label = pygame.font.SysFont("monospace", 60).render(text, 1, colors["YELLOW"])
         screen.blit(label, (40, 10))
         pygame.display.update()
 
